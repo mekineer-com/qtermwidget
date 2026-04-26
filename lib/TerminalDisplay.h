@@ -780,7 +780,6 @@ private:
     uint _randomSeed;
 
     bool _resizing;
-    bool _growPending;
     bool _terminalSizeHint;
     bool _terminalSizeStartup;
     bool _bidiEnabled;

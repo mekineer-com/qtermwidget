@@ -349,6 +349,7 @@ public:
      * This has no effect once the session is running.
      */
     void setDarkBackground(bool darkBackground);
+    void setSuppressPtyResize(bool suppress) { _suppressPtyResize = suppress; }
     /**
      * Returns true if the session has a dark background.
      * See setDarkBackground()
@@ -510,6 +511,7 @@ private slots:
 private:
 
     void updateTerminalSize();
+    bool _suppressPtyResize = false;
     WId windowId() const;
 
     int            _uniqueIdentifier;

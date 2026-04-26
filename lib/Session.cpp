@@ -506,7 +506,8 @@ void Session::updateTerminalSize()
     // backend emulation must have a _terminal of at least 1 column x 1 line in size
     if ( minLines > 0 && minColumns > 0 ) {
         _emulation->setImageSize( minLines , minColumns );
-        _shellProcess->setWindowSize( minLines , minColumns );
+        if ( !_suppressPtyResize )
+            _shellProcess->setWindowSize( minLines , minColumns );
     }
 }
 
