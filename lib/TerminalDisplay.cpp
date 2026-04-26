@@ -342,6 +342,7 @@ TerminalDisplay::TerminalDisplay(QWidget *parent)
 ,_image(nullptr)
 ,_randomSeed(0)
 ,_resizing(false)
+,_growPending(false)
 ,_terminalSizeHint(false)
 ,_terminalSizeStartup(true)
 ,_bidiEnabled(true)
@@ -1106,6 +1107,17 @@ void TerminalDisplay::updateImage()
 {
   if ( !_screenWindow )
       return;
+
+  // After the terminal grows, scrollBarPositionChanged triggers
+  // updateImage before the emulator has settled.  The ScreenWindow
+  // still holds a stale viewport, so getImage would paint ghost
+  // content in the new lines.  Skip this call and let the next
+  // outputChanged-driven call (10-40ms later) paint correct content.
+  if (_growPending)
+  {
+      _growPending = false;
+      return;
+  }
 
   // optimization - scroll the existing image where possible and
   // avoid expensive text drawing for parts of the image that
@@ -1981,6 +1993,9 @@ void TerminalDisplay::updateImageSize()
       _screenWindow->setWindowLines(_lines);
 
   _resizing = (oldlin!=_lines) || (oldcol!=_columns);
+
+  if (_lines > oldlin)
+      _growPending = true;
 
   if ( _resizing )
   {
