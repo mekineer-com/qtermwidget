@@ -508,9 +508,10 @@ private slots:
 //  void zmodemRcvBlock(const char *data, int len);
 //  void zmodemFinished();
 
-private:
-
+public:
     void updateTerminalSize();
+
+private:
     bool _suppressPtyResize = false;
     WId windowId() const;
 

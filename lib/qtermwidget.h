@@ -136,6 +136,7 @@ public:
     void scrollToEnd() override;
 
     void setSuppressPtyResize(bool suppress);
+    void sendCurrentSizeToPty();
 
     // Send some text to terminal
     void sendText(const QString & text) override;
