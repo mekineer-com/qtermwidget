@@ -1124,6 +1124,9 @@ void TerminalDisplay::updateImage()
   int lines = _screenWindow->windowLines();
   int columns = _screenWindow->windowColumns();
 
+  if (lines <= 0 || columns <= 0)
+      return;
+
   setScroll( _screenWindow->currentLine() , _screenWindow->lineCount() );
 
   Q_ASSERT( this->_usedLines <= this->_lines );
@@ -1525,9 +1528,13 @@ void TerminalDisplay::paintEvent( QPaintEvent* pe )
 QPoint TerminalDisplay::cursorPosition() const
 {
     if (_screenWindow)
-        return _screenWindow->cursorPosition();
-    else
-        return {0,0};
+    {
+        QPoint pos = _screenWindow->cursorPosition();
+        pos.setY(qMin(pos.y(), qMax(0, _lines - 1)));
+        pos.setX(qMin(pos.x(), qMax(0, _columns - 1)));
+        return pos;
+    }
+    return {0,0};
 }
 
 QRect TerminalDisplay::preeditRect() const
@@ -3100,7 +3107,7 @@ void TerminalDisplay::inputMethodEvent( QInputMethodEvent* event )
 }
 QVariant TerminalDisplay::inputMethodQuery( Qt::InputMethodQuery query ) const
 {
-    const QPoint cursorPos = _screenWindow ? _screenWindow->cursorPosition() : QPoint(0,0);
+    const QPoint cursorPos = cursorPosition();
     switch ( query )
     {
         case Qt::ImCursorRectangle:
@@ -3115,12 +3122,16 @@ QVariant TerminalDisplay::inputMethodQuery( Qt::InputMethodQuery query ) const
             break;
         case Qt::ImSurroundingText:
             {
+                if (_image == nullptr || _usedColumns <= 0)
+                    return QString();
+
                 // return the text from the current line
                 QString lineText;
                 QTextStream stream(&lineText);
                 PlainTextDecoder decoder;
                 decoder.begin(&stream);
-                decoder.decodeLine(&_image[loc(0,cursorPos.y())],_usedColumns,0);
+                const int safeLine = qBound(0, cursorPos.y(), qMax(0, _lines - 1));
+                decoder.decodeLine(&_image[loc(0,safeLine)],_usedColumns,0);
                 decoder.end();
                 return lineText;
             }

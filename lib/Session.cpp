@@ -472,7 +472,22 @@ void Session::activityStateSet(int state)
 
 void Session::onViewSizeChange(int /*height*/, int /*width*/)
 {
-    updateTerminalSize();
+    if (!_suppressPtyResize)
+    {
+        if (_resizeDebounce && _resizeDebounce->isActive())
+            _resizeDebounce->stop();
+        updateTerminalSize();
+        return;
+    }
+
+    if (!_resizeDebounce)
+    {
+        _resizeDebounce = new QTimer(this);
+        _resizeDebounce->setSingleShot(true);
+        _resizeDebounce->setInterval(150);
+        connect(_resizeDebounce, &QTimer::timeout, this, &Session::updateTerminalSize);
+    }
+    _resizeDebounce->start();
 }
 void Session::onEmulationSizeChange(QSize size)
 {

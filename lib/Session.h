@@ -513,6 +513,7 @@ public:
 
 private:
     bool _suppressPtyResize = false;
+    QTimer *_resizeDebounce = nullptr;
     WId windowId() const;
 
     int            _uniqueIdentifier;
