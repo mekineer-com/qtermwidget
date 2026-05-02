@@ -48,6 +48,9 @@ using namespace Konsole;
 
 void Pty::setWindowSize(int lines, int cols)
 {
+  if (_windowColumns == cols && _windowLines == lines)
+    return;
+
   _windowColumns = cols;
   _windowLines = lines;
 
@@ -358,4 +361,3 @@ void Pty::closePty()
 {
     pty()->close();
 }
-
