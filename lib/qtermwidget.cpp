@@ -531,11 +531,6 @@ void QTermWidget::scrollToEnd()
     m_impl->m_terminalDisplay->scrollToEnd();
 }
 
-void QTermWidget::sendCurrentSizeToPty()
-{
-    m_impl->m_session->updateTerminalSize();
-}
-
 void QTermWidget::sendText(const QString &text)
 {
     m_impl->m_session->sendText(text);

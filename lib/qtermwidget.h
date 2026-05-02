@@ -135,8 +135,6 @@ public:
     // Wrapped, scroll to end.
     void scrollToEnd() override;
 
-    void sendCurrentSizeToPty();
-
     // Send some text to terminal
     void sendText(const QString & text) override;
 
