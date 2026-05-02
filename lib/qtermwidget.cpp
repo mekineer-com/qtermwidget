@@ -531,11 +531,6 @@ void QTermWidget::scrollToEnd()
     m_impl->m_terminalDisplay->scrollToEnd();
 }
 
-void QTermWidget::setSuppressPtyResize(bool suppress)
-{
-    m_impl->m_session->setSuppressPtyResize(suppress);
-}
-
 void QTermWidget::sendCurrentSizeToPty()
 {
     m_impl->m_session->updateTerminalSize();

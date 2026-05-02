@@ -472,14 +472,6 @@ void Session::activityStateSet(int state)
 
 void Session::onViewSizeChange(int /*height*/, int /*width*/)
 {
-    if (!_suppressPtyResize)
-    {
-        if (_resizeDebounce && _resizeDebounce->isActive())
-            _resizeDebounce->stop();
-        updateTerminalSize();
-        return;
-    }
-
     if (!_resizeDebounce)
     {
         _resizeDebounce = new QTimer(this);
@@ -520,10 +512,8 @@ void Session::updateTerminalSize()
 
     // backend emulation must have a _terminal of at least 1 column x 1 line in size
     if ( minLines > 0 && minColumns > 0 ) {
-        if ( !_suppressPtyResize ) {
-            _emulation->setImageSize( minLines , minColumns );
-            _shellProcess->setWindowSize( minLines , minColumns );
-        }
+        _emulation->setImageSize( minLines , minColumns );
+        _shellProcess->setWindowSize( minLines , minColumns );
     }
 }
 

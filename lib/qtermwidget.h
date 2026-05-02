@@ -135,7 +135,6 @@ public:
     // Wrapped, scroll to end.
     void scrollToEnd() override;
 
-    void setSuppressPtyResize(bool suppress);
     void sendCurrentSizeToPty();
 
     // Send some text to terminal

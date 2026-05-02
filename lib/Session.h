@@ -349,7 +349,6 @@ public:
      * This has no effect once the session is running.
      */
     void setDarkBackground(bool darkBackground);
-    void setSuppressPtyResize(bool suppress) { _suppressPtyResize = suppress; }
     /**
      * Returns true if the session has a dark background.
      * See setDarkBackground()
@@ -512,7 +511,6 @@ public:
     void updateTerminalSize();
 
 private:
-    bool _suppressPtyResize = false;
     QTimer *_resizeDebounce = nullptr;
     WId windowId() const;
 
