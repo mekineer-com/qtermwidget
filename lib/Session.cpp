@@ -486,6 +486,11 @@ void Session::onEmulationSizeChange(QSize size)
     setSize(size);
 }
 
+bool Session::hasPendingResize() const
+{
+    return _resizeDebounce != nullptr && _resizeDebounce->isActive();
+}
+
 void Session::updateTerminalSize()
 {
     QListIterator<TerminalDisplay *> viewIter(_views);
@@ -515,6 +520,8 @@ void Session::updateTerminalSize()
         _emulation->setImageSize( minLines , minColumns );
         _shellProcess->setWindowSize( minLines , minColumns );
     }
+
+    emit terminalResizeSettled();
 }
 
 void Session::refresh()

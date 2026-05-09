@@ -204,6 +204,13 @@ int QTermWidget::getShellPID()
     return m_impl->m_session->processId();
 }
 
+bool QTermWidget::hasPendingTerminalResize() const
+{
+    return m_impl != nullptr
+        && m_impl->m_session != nullptr
+        && m_impl->m_session->hasPendingResize();
+}
+
 int QTermWidget::getForegroundProcessId()
 {
     return m_impl->m_session->foregroundProcessId();
@@ -301,6 +308,7 @@ void QTermWidget::init(int startnow)
 
     connect(m_impl->m_session, SIGNAL(activity()), this, SIGNAL(activity()));
     connect(m_impl->m_session, SIGNAL(silence()), this, SIGNAL(silence()));
+    connect(m_impl->m_session, &Session::terminalResizeSettled, this, &QTermWidget::terminalResizeSettled);
     connect(m_impl->m_session, &Session::profileChangeCommandReceived, this, &QTermWidget::profileChanged);
     connect(m_impl->m_session, &Session::receivedData, this, &QTermWidget::receivedData);
 

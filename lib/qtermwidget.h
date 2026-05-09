@@ -68,6 +68,7 @@ public:
     void startTerminalTeletype() override;
 
     int getShellPID() override;
+    bool hasPendingTerminalResize() const;
 
     /**
      * Get the PID of the foreground process
@@ -276,6 +277,7 @@ signals:
 
     void activity();
     void silence();
+    void terminalResizeSettled();
 
     /**
      * Emitted when emulator send data to the terminal process
