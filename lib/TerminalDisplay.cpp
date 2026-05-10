@@ -3303,7 +3303,7 @@ void TerminalDisplay::calcGeometry()
      break;
   }
 
-  _topMargin = _topBaseMargin;
+  _topMargin = _topBaseMargin + _renderTopOffset;
   _contentHeight = contentsRect().height() - 2 * _topBaseMargin + /* mysterious */ 1;
 
   if (!_isFixedSize)
@@ -3334,6 +3334,17 @@ void TerminalDisplay::makeImage()
   _image = new Character[_imageSize+1];
 
   clearImage();
+}
+
+void TerminalDisplay::setRenderTopOffset(int pixels)
+{
+  if (_renderTopOffset == pixels)
+  {
+    return;
+  }
+  _renderTopOffset = pixels;
+  _topMargin = _topBaseMargin + _renderTopOffset;
+  update();
 }
 
 // calculate the needed size, this must be synced with calcGeometry()

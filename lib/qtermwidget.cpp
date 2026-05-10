@@ -549,6 +549,11 @@ void QTermWidget::sendKeyEvent(QKeyEvent *e)
     m_impl->m_session->sendKeyEvent(e);
 }
 
+void QTermWidget::setRenderTopOffset(int pixels)
+{
+    m_impl->m_terminalDisplay->setRenderTopOffset(pixels);
+}
+
 void QTermWidget::resizeEvent(QResizeEvent*)
 {
 //qDebug("global window resizing...with %d %d", this->size().width(), this->size().height());

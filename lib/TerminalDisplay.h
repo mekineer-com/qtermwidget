@@ -441,6 +441,13 @@ public:
     */
     void autoHideMouseAfter(int delay);
 
+    /**
+     * Shift rendered content vertically without resizing the widget.
+     * Negative values move content upward (top rows clipped by widget bounds).
+     * Coordinate mapping for mouse events updates automatically.
+     */
+    void setRenderTopOffset(int pixels);
+
 public slots:
 
     /**
@@ -872,6 +879,7 @@ private:
 
     int _leftBaseMargin;
     int _topBaseMargin;
+    int _renderTopOffset = 0;
 
     bool _drawLineChars;
 
