@@ -142,6 +142,7 @@ public:
     // Send key event to terminal
     void sendKeyEvent(QKeyEvent* e) override;
     void setRenderTopOffset(int pixels);
+    void setSearchBarBottomInset(int pixels);
 
     // Sets whether flow control is enabled
     void setFlowControlEnabled(bool enabled) override;
@@ -350,6 +351,7 @@ private:
     void init(int startnow);
     TermWidgetImpl * m_impl;
     SearchBar* m_searchBar;
+    int m_searchBarBottomInset = 0;
     QVBoxLayout *m_layout;
     QTranslator *m_translator;
 };

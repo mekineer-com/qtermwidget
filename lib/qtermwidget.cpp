@@ -561,7 +561,7 @@ void QTermWidget::resizeEvent(QResizeEvent*)
     if (m_searchBar != nullptr && !m_searchBar->isHidden())
     {
         const int sbHeight = m_searchBar->sizeHint().height();
-        m_searchBar->setGeometry(0, height() - sbHeight, width(), sbHeight);
+        m_searchBar->setGeometry(0, height() - sbHeight - m_searchBarBottomInset, width(), sbHeight);
         m_searchBar->raise();
     }
 }
@@ -652,13 +652,24 @@ void QTermWidget::toggleShowSearchBar()
     if (m_searchBar->isHidden())
     {
         const int sbHeight = m_searchBar->sizeHint().height();
-        m_searchBar->setGeometry(0, height() - sbHeight, width(), sbHeight);
+        m_searchBar->setGeometry(0, height() - sbHeight - m_searchBarBottomInset, width(), sbHeight);
         m_searchBar->raise();
         m_searchBar->show();
     }
     else
     {
         m_searchBar->hide();
+    }
+}
+
+void QTermWidget::setSearchBarBottomInset(int pixels)
+{
+    m_searchBarBottomInset = pixels;
+    if (m_searchBar != nullptr && !m_searchBar->isHidden())
+    {
+        const int sbHeight = m_searchBar->sizeHint().height();
+        m_searchBar->setGeometry(0, height() - sbHeight - m_searchBarBottomInset, width(), sbHeight);
+        m_searchBar->raise();
     }
 }
 
