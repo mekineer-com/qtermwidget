@@ -3304,7 +3304,7 @@ void TerminalDisplay::calcGeometry()
   }
 
   _topMargin = _topBaseMargin + _renderTopOffset;
-  _contentHeight = contentsRect().height() - 2 * _topBaseMargin + /* mysterious */ 1;
+  _contentHeight = contentsRect().height() - 2 * _topBaseMargin + /* mysterious */ 1 - _renderBottomReserve;
 
   if (!_isFixedSize)
   {
@@ -3344,6 +3344,17 @@ void TerminalDisplay::setRenderTopOffset(int pixels)
   }
   _renderTopOffset = pixels;
   _topMargin = _topBaseMargin + _renderTopOffset;
+  update();
+}
+
+void TerminalDisplay::setRenderBottomReserve(int pixels)
+{
+  if (_renderBottomReserve == pixels)
+  {
+    return;
+  }
+  _renderBottomReserve = pixels;
+  propagateSize();
   update();
 }
 

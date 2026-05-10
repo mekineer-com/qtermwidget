@@ -554,6 +554,11 @@ void QTermWidget::setRenderTopOffset(int pixels)
     m_impl->m_terminalDisplay->setRenderTopOffset(pixels);
 }
 
+void QTermWidget::setRenderBottomReserve(int pixels)
+{
+    m_impl->m_terminalDisplay->setRenderBottomReserve(pixels);
+}
+
 void QTermWidget::resizeEvent(QResizeEvent*)
 {
 //qDebug("global window resizing...with %d %d", this->size().width(), this->size().height());

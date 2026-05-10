@@ -142,6 +142,7 @@ public:
     // Send key event to terminal
     void sendKeyEvent(QKeyEvent* e) override;
     void setRenderTopOffset(int pixels);
+    void setRenderBottomReserve(int pixels);
     void setSearchBarBottomInset(int pixels);
 
     // Sets whether flow control is enabled

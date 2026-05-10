@@ -448,6 +448,12 @@ public:
      */
     void setRenderTopOffset(int pixels);
 
+    /**
+     * Reserve pixels at the bottom of the widget for an external overlay.
+     * Terminal _lines / Screen height are reduced accordingly.
+     */
+    void setRenderBottomReserve(int pixels);
+
 public slots:
 
     /**
@@ -880,6 +886,7 @@ private:
     int _leftBaseMargin;
     int _topBaseMargin;
     int _renderTopOffset = 0;
+    int _renderBottomReserve = 0;
 
     bool _drawLineChars;
 
