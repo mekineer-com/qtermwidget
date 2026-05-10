@@ -322,7 +322,7 @@ void QTermWidget::init(int startnow)
     connect(m_searchBar, SIGNAL(searchCriteriaChanged()), this, SLOT(find()));
     connect(m_searchBar, SIGNAL(findNext()), this, SLOT(findNext()));
     connect(m_searchBar, SIGNAL(findPrevious()), this, SLOT(findPrevious()));
-    m_layout->addWidget(m_searchBar);
+    // Overlay (not in layout) so showing it doesn't resize TerminalDisplay
     m_searchBar->hide();
 
     if (startnow && m_impl->m_session) {
@@ -558,6 +558,12 @@ void QTermWidget::resizeEvent(QResizeEvent*)
 {
 //qDebug("global window resizing...with %d %d", this->size().width(), this->size().height());
     m_impl->m_terminalDisplay->resize(this->size());
+    if (m_searchBar != nullptr && !m_searchBar->isHidden())
+    {
+        const int sbHeight = m_searchBar->sizeHint().height();
+        m_searchBar->setGeometry(0, height() - sbHeight, width(), sbHeight);
+        m_searchBar->raise();
+    }
 }
 
 
@@ -643,7 +649,17 @@ QString QTermWidget::keyBindings()
 
 void QTermWidget::toggleShowSearchBar()
 {
-    m_searchBar->isHidden() ? m_searchBar->show() : m_searchBar->hide();
+    if (m_searchBar->isHidden())
+    {
+        const int sbHeight = m_searchBar->sizeHint().height();
+        m_searchBar->setGeometry(0, height() - sbHeight, width(), sbHeight);
+        m_searchBar->raise();
+        m_searchBar->show();
+    }
+    else
+    {
+        m_searchBar->hide();
+    }
 }
 
 bool QTermWidget::flowControlEnabled(void)
