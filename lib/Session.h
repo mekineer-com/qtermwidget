@@ -332,7 +332,7 @@ public:
 
     /** Returns the terminal session's window size in lines and columns. */
     QSize size();
-    /** Returns true when a debounced terminal resize update is pending. */
+    /** Returns true when a queued terminal resize update is pending. */
     bool hasPendingResize() const;
     /**
      * Emits a request to resize the session to accommodate
@@ -484,7 +484,7 @@ signals:
      * Broker for Emulation::cursorChanged() signal
      */
     void cursorChanged(Emulation::KeyboardCursorShape cursorShape, bool blinkingCursorEnabled);
-    /** Emitted after a pending resize debounce updates terminal/PTTY size. */
+    /** Emitted after a pending queued update flushes terminal/PTTY size. */
     void terminalResizeSettled();
 
     void silence();
@@ -515,7 +515,7 @@ public:
     void updateTerminalSize();
 
 private:
-    QTimer *_resizeDebounce = nullptr;
+    bool _resizeUpdateScheduled = false;
     WId windowId() const;
 
     int            _uniqueIdentifier;

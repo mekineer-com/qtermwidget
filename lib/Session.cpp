@@ -472,14 +472,12 @@ void Session::activityStateSet(int state)
 
 void Session::onViewSizeChange(int /*height*/, int /*width*/)
 {
-    if (!_resizeDebounce)
-    {
-        _resizeDebounce = new QTimer(this);
-        _resizeDebounce->setSingleShot(true);
-        _resizeDebounce->setInterval(150);
-        connect(_resizeDebounce, &QTimer::timeout, this, &Session::updateTerminalSize);
+    if (_resizeUpdateScheduled) {
+        return;
     }
-    _resizeDebounce->start();
+
+    _resizeUpdateScheduled = true;
+    QTimer::singleShot(0, this, [this]() { updateTerminalSize(); });
 }
 void Session::onEmulationSizeChange(QSize size)
 {
@@ -488,11 +486,12 @@ void Session::onEmulationSizeChange(QSize size)
 
 bool Session::hasPendingResize() const
 {
-    return _resizeDebounce != nullptr && _resizeDebounce->isActive();
+    return _resizeUpdateScheduled;
 }
 
 void Session::updateTerminalSize()
 {
+    _resizeUpdateScheduled = false;
     QListIterator<TerminalDisplay *> viewIter(_views);
 
     int minLines = -1;
