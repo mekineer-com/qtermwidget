@@ -1605,27 +1605,27 @@ void TerminalDisplay::paintFilters(QPainter& painter)
             QRect r;
             if (spot->startLine()==spot->endLine()) {
                 r.setCoords( spot->startColumn()*_fontWidth + 1 + leftMargin,
-                             spot->startLine()*_fontHeight + 1 + _topBaseMargin,
+                             spot->startLine()*_fontHeight + 1 + _topMargin,
                              spot->endColumn()*_fontWidth - 1 + leftMargin,
-                             (spot->endLine()+1)*_fontHeight - 1 + _topBaseMargin );
+                             (spot->endLine()+1)*_fontHeight - 1 + _topMargin );
                 region |= r;
             } else {
                 r.setCoords( spot->startColumn()*_fontWidth + 1 + leftMargin,
-                             spot->startLine()*_fontHeight + 1 + _topBaseMargin,
+                             spot->startLine()*_fontHeight + 1 + _topMargin,
                              _columns*_fontWidth - 1 + leftMargin,
-                             (spot->startLine()+1)*_fontHeight - 1 + _topBaseMargin );
+                             (spot->startLine()+1)*_fontHeight - 1 + _topMargin );
                 region |= r;
                 for ( int line = spot->startLine()+1 ; line < spot->endLine() ; line++ ) {
                     r.setCoords( 0*_fontWidth + 1 + leftMargin,
-                                 line*_fontHeight + 1 + _topBaseMargin,
+                                 line*_fontHeight + 1 + _topMargin,
                                  _columns*_fontWidth - 1 + leftMargin,
-                                 (line+1)*_fontHeight - 1 + _topBaseMargin );
+                                 (line+1)*_fontHeight - 1 + _topMargin );
                     region |= r;
                 }
                 r.setCoords( 0*_fontWidth + 1 + leftMargin,
-                             spot->endLine()*_fontHeight + 1 + _topBaseMargin,
+                             spot->endLine()*_fontHeight + 1 + _topMargin,
                              spot->endColumn()*_fontWidth - 1 + leftMargin,
-                             (spot->endLine()+1)*_fontHeight - 1 + _topBaseMargin );
+                             (spot->endLine()+1)*_fontHeight - 1 + _topMargin );
                 region |= r;
             }
         }
@@ -1661,9 +1661,9 @@ void TerminalDisplay::paintFilters(QPainter& painter)
             // finds it on the border of the target area
             QRect r;
             r.setCoords( startColumn*_fontWidth + 1 + leftMargin,
-                         line*_fontHeight + 1 + _topBaseMargin,
+                         line*_fontHeight + 1 + _topMargin,
                          endColumn*_fontWidth - 1 + leftMargin,
-                         (line+1)*_fontHeight - 1 + _topBaseMargin );
+                         (line+1)*_fontHeight - 1 + _topMargin );
             // Underline link hotspots
             if ( spot->type() == Filter::HotSpot::Link )
             {
@@ -2242,27 +2242,27 @@ void TerminalDisplay::mouseMoveEvent(QMouseEvent* ev)
     QRect r;
     if (spot->startLine()==spot->endLine()) {
         r.setCoords( spot->startColumn()*_fontWidth + leftMargin,
-                     spot->startLine()*_fontHeight + _topBaseMargin,
+                     spot->startLine()*_fontHeight + _topMargin,
                      spot->endColumn()*_fontWidth + leftMargin,
-                     (spot->endLine()+1)*_fontHeight - 1 + _topBaseMargin );
+                     (spot->endLine()+1)*_fontHeight - 1 + _topMargin );
         _mouseOverHotspotArea |= r;
     } else {
         r.setCoords( spot->startColumn()*_fontWidth + leftMargin,
-                     spot->startLine()*_fontHeight + _topBaseMargin,
+                     spot->startLine()*_fontHeight + _topMargin,
                      _columns*_fontWidth - 1 + leftMargin,
-                     (spot->startLine()+1)*_fontHeight + _topBaseMargin );
+                     (spot->startLine()+1)*_fontHeight + _topMargin );
         _mouseOverHotspotArea |= r;
         for ( int line = spot->startLine()+1 ; line < spot->endLine() ; line++ ) {
             r.setCoords( 0*_fontWidth + leftMargin,
-                         line*_fontHeight + _topBaseMargin,
+                         line*_fontHeight + _topMargin,
                          _columns*_fontWidth + leftMargin,
-                         (line+1)*_fontHeight + _topBaseMargin );
+                         (line+1)*_fontHeight + _topMargin );
             _mouseOverHotspotArea |= r;
         }
         r.setCoords( 0*_fontWidth + leftMargin,
-                     spot->endLine()*_fontHeight + _topBaseMargin,
+                     spot->endLine()*_fontHeight + _topMargin,
                      spot->endColumn()*_fontWidth + leftMargin,
-                     (spot->endLine()+1)*_fontHeight + _topBaseMargin );
+                     (spot->endLine()+1)*_fontHeight + _topMargin );
         _mouseOverHotspotArea |= r;
     }
 
