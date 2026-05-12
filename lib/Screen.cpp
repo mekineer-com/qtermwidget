@@ -1205,7 +1205,7 @@ void Screen::getSelectionStart(int& column , int& line) const
     }
     else
     {
-        column = cuX + getHistLines();
+        column = cuX;
         line = cuY + getHistLines();
     }
 }
@@ -1218,7 +1218,7 @@ void Screen::getSelectionEnd(int& column , int& line) const
     }
     else
     {
-        column = cuX + getHistLines();
+        column = cuX;
         line = cuY + getHistLines();
     }
 }
