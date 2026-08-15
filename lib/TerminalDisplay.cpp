@@ -3467,7 +3467,8 @@ void TerminalDisplay::dropEvent(QDropEvent* event)
   }
 
   emit sendStringToEmu(dropText.toLocal8Bit().constData());
-  event->acceptProposedAction();
+  event->setDropAction(Qt::CopyAction);
+  event->accept();
 }
 
 void TerminalDisplay::doDrag()
