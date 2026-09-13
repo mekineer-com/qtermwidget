@@ -232,7 +232,7 @@ protected:
      * to return custom hotspot types
      */
     virtual RegExpFilter::HotSpot* newHotSpot(int startLine,int startColumn,
-                                    int endLine,int endColumn);
+                                    int endLine,int endColumn,const QStringList& capturedTexts);
 
 private:
     QRegularExpression _searchText;
@@ -283,7 +283,7 @@ public:
     UrlFilter();
 
 protected:
-    RegExpFilter::HotSpot* newHotSpot(int,int,int,int) override;
+    RegExpFilter::HotSpot* newHotSpot(int,int,int,int,const QStringList&) override;
 
 private:
 
